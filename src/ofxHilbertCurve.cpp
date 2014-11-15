@@ -27,9 +27,7 @@ void ofxHilbertCurve::draw()
     tempY = hilbertYpos;
     count = 0;
     
-    ldr(stages);
-    
-    printf("count = %d\n", count);
+    ldr(stages);    
 }
 
 

@@ -24,8 +24,8 @@ public:
     void setup();
     void update();
     void draw();
-    
     void keyPressed(int key);
+    
     ofxPanel gui;
     ofxIntSlider stageSlider;
     ofxIntSlider deltaSlider;
@@ -36,4 +36,5 @@ public:
     ofxFloatSlider rPhaseSlider;
     ofxHilbertCurve *hilbertCurve;
     bool drawEnable = false;
+    ofTrueTypeFont font;
 };

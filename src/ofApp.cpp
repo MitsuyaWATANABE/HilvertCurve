@@ -15,7 +15,7 @@ void ofApp::setup()
     gui.add(xSlider.setup("xPos", 716, 0, ofGetWidth()));
     gui.add(ySlider.setup("yPos", 44, 0, ofGetHeight()));
     hilbertCurve = new ofxHilbertCurve;
-
+    font.loadFont("futura_book.otf", 11);
 }
 
 //--------------------------------------------------------------
@@ -33,8 +33,10 @@ void ofApp::draw()
     if (drawEnable)
         hilbertCurve->draw();
     
-    if (!drawEnable)
+    if (!drawEnable) {
+        font.drawString("This is a sample for Hilvert Curve.\n\nTyping \"s\" key displays it.\nthen if you type \"a\", you can watch the drawing process as an animation", 20, 200);
         gui.draw();
+    }
 }
 
 //--------------------------------------------------------------
@@ -42,6 +44,10 @@ void ofApp::keyPressed(int key){
     switch (key) {
         case 's' :
             drawEnable = !drawEnable;
+            break;
+            
+        case 'a':
+            hilbertCurve->isAnimation = !hilbertCurve->isAnimation;
             break;
     }
 }

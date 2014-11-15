@@ -23,10 +23,13 @@ void ofxHilbertCurve::draw()
 {
     hilbertXpos = startXPos;
     hilbertYpos = startYPos;
-    count = 0;
     tempX = hilbertXpos;
     tempY = hilbertYpos;
+    count = 0;
+    
     ldr(stages);
+    
+    printf("count = %d\n", count);
 }
 
 
@@ -34,85 +37,174 @@ void ofxHilbertCurve::draw()
 void ofxHilbertCurve::ldr(int n)
 {
     if (n > 0) {
-        dlu(n - 1);
-        if (drawingCount < count) return;
-        // <-
-        drawLineInDirection(VectorDirectionRightToLeft);
-        
-        ldr(n - 1);
-        if (drawingCount < count) return;
-        // v|
-        drawLineInDirection(VectorDirectionUpToDown);
-        
-        ldr(n - 1);
-        if (drawingCount < count) return;
-        // ->
-        drawLineInDirection(VectorDirectionLeftToRight);
-        
-        urd(n - 1);
+        if (isAnimation) {
+            dlu(n - 1);
+            if (drawingCount < count) return;
+            // <-
+            drawLineInDirection(VectorDirectionRightToLeft);
+            
+            ldr(n - 1);
+            if (drawingCount < count) return;
+            // v|
+            drawLineInDirection(VectorDirectionUpToDown);
+            
+            ldr(n - 1);
+            if (drawingCount < count) return;
+            // ->
+            drawLineInDirection(VectorDirectionLeftToRight);
+            
+            urd(n - 1);
+        } else {
+            dlu(n-1);
+
+            hilbertXpos -= delta;
+            ofLine(tempX, hilbertYpos, hilbertXpos, hilbertYpos);
+            tempX = hilbertXpos;
+            
+            ldr(n-1);
+
+            hilbertYpos += delta;
+            ofLine(hilbertXpos, tempY, hilbertXpos, hilbertYpos);
+            tempY = hilbertYpos;
+            
+            ldr(n-1);
+
+            hilbertXpos += delta;
+            ofLine(tempX, hilbertYpos, hilbertXpos, hilbertYpos);
+            tempX = hilbertXpos;
+            urd(n-1);
+        }
     }
 }
 void ofxHilbertCurve::urd(int n)
 {
     if (n > 0) {
-        rul(n - 1);
-        if (drawingCount < count) return;
-        // ^|
-        drawLineInDirection(VectorDirectionDownToUp);
-        
-        urd(n - 1);
-        if (drawingCount < count) return;
-        // ->
-        drawLineInDirection(VectorDirectionLeftToRight);
-        
-        urd(n - 1);
-        if (drawingCount < count) return;
-        // v|
-        drawLineInDirection(VectorDirectionUpToDown);
-        
-        ldr(n - 1);
+        if(isAnimation) {
+            rul(n - 1);
+            if (drawingCount < count) return;
+            // ^|
+            drawLineInDirection(VectorDirectionDownToUp);
+            
+            urd(n - 1);
+            if (drawingCount < count) return;
+            // ->
+            drawLineInDirection(VectorDirectionLeftToRight);
+            
+            urd(n - 1);
+            if (drawingCount < count) return;
+            // v|
+            drawLineInDirection(VectorDirectionUpToDown);
+            
+            ldr(n - 1);
+        } else {
+            rul(n-1);
+            
+            hilbertYpos -= delta;
+            ofLine(hilbertXpos, tempY, hilbertXpos, hilbertYpos);
+            tempY = hilbertYpos;
+            
+            urd(n-1);
+            
+            hilbertXpos += delta;
+            ofLine(tempX, hilbertYpos, hilbertXpos, hilbertYpos);
+            tempX = hilbertXpos;
+            
+            urd(n-1);
+
+            hilbertYpos += delta;
+            ofLine(hilbertXpos, tempY, hilbertXpos, hilbertYpos);
+            tempY = hilbertYpos;
+            
+            ldr(n-1);
+
+        }
     }
 }
 void ofxHilbertCurve::rul(int n)
 {
     if (n > 0) {
-        urd(n - 1);
-        if (drawingCount < count) return;
-        // ->
-        drawLineInDirection(VectorDirectionLeftToRight);
-        
-        rul(n - 1);
-        if (drawingCount < count) return;
-        // ^|
-        drawLineInDirection(VectorDirectionDownToUp);
-        
-        rul(n - 1);
-        if (drawingCount < count) return;
-        // <-
-        drawLineInDirection(VectorDirectionRightToLeft);
-        
-        dlu(n - 1);
+        if (isAnimation) {
+            urd(n - 1);
+            if (drawingCount < count) return;
+            // ->
+            drawLineInDirection(VectorDirectionLeftToRight);
+            
+            rul(n - 1);
+            if (drawingCount < count) return;
+            // ^|
+            drawLineInDirection(VectorDirectionDownToUp);
+            
+            rul(n - 1);
+            if (drawingCount < count) return;
+            // <-
+            drawLineInDirection(VectorDirectionRightToLeft);
+            
+            dlu(n - 1);
+        } else {
+            urd(n-1);
+
+            hilbertXpos += delta;
+            ofLine(tempX, hilbertYpos, hilbertXpos, hilbertYpos);
+            tempX = hilbertXpos;
+            
+            rul(n-1);
+            
+            hilbertYpos -= delta;
+            ofLine(hilbertXpos, tempY, hilbertXpos, hilbertYpos);
+            tempY = hilbertYpos;
+
+            rul(n-1);
+
+            hilbertXpos -= delta;
+            ofLine(tempX, hilbertYpos, hilbertXpos, hilbertYpos);
+            tempX = hilbertXpos;
+            
+            dlu(n-1);
+
+        }
     }
 }
 void ofxHilbertCurve::dlu(int n)
 {
     if (n > 0) {
-        ldr(n - 1);
-        if (drawingCount < count) return;
-        // v|
-        drawLineInDirection(VectorDirectionUpToDown);
-        
-        dlu(n - 1);
-        if (drawingCount < count) return;
-        // <-
-        drawLineInDirection(VectorDirectionRightToLeft);
-        
-        dlu(n - 1);
-        if (drawingCount < count) return;
-        // ^|
-        drawLineInDirection(VectorDirectionDownToUp);
-        
-        rul(n - 1);
+        if (isAnimation) {
+            ldr(n - 1);
+            if (drawingCount < count) return;
+            // v|
+            drawLineInDirection(VectorDirectionUpToDown);
+            
+            dlu(n - 1);
+            if (drawingCount < count) return;
+            // <-
+            drawLineInDirection(VectorDirectionRightToLeft);
+            
+            dlu(n - 1);
+            if (drawingCount < count) return;
+            // ^|
+            drawLineInDirection(VectorDirectionDownToUp);
+            
+            rul(n - 1);
+        } else {
+            ldr(n-1);
+            
+            hilbertYpos += delta;
+            ofLine(hilbertXpos, tempY, hilbertXpos, hilbertYpos);
+            tempY = hilbertYpos;
+
+            dlu(n-1);
+            
+            hilbertXpos -= delta;
+            ofLine(tempX, hilbertYpos, hilbertXpos, hilbertYpos);
+            tempX = hilbertXpos;
+            
+            dlu(n-1);
+            
+            hilbertYpos -= delta;
+            ofLine(hilbertXpos, tempY, hilbertXpos, hilbertYpos);
+            tempY = hilbertYpos;
+            
+            rul(n-1);
+        }
     }
 }
 

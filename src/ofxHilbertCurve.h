@@ -53,6 +53,7 @@ public:
     unsigned duration = 100;
 
     bool enableDrawing = true;
+    bool isAnimation = false;
     ofxTween tweenlinear;
     ofxEasingLinear 	easinglinear;
     void drawLineInDirection(VectorDirection direction); // 0: xAxis, 1: yAxis
